@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Everything personal lives here. Links left empty are simply not shown.
  * Run `npm run check` to list anything still unfilled.
  */
@@ -24,7 +24,7 @@ export const site = {
   github: "https://github.com/Sam-732",
 
   // Put the PDF in /public (for example /public/resume.pdf) and set "/resume.pdf".
-  resume: "",
+  resume: "https://drive.google.com/file/d/1n_77qpL7oPatq2FAVhY6diGkUG469pPY/view",
 
   // About page photo: put the file in /public/images and set the path, or leave empty.
   photo: "",
