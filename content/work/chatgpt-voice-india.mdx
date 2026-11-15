@@ -1,0 +1,102 @@
+---
+title: ChatGPT voice mode adoption in India
+kind: Fellowship research
+order: 1
+finding: "Most people who skip ChatGPT’s voice mode aren’t blocked by anything. The ones who use it go quiet in public, so I prioritised a whisper mode."
+counts: "36 survey responses. 5 one-to-one interviews. 3 hypotheses tested. 4 solutions ranked by effort and impact."
+description: "NextLeap fellowship research on ChatGPT voice mode adoption in India: a survey, interviews, three hypotheses, and a prioritised solution, a quiet mode for speaking in shared spaces."
+summary:
+  - "Fellowship research on one question: how do you increase voice mode adoption in the ChatGPT mobile app in India?"
+  - "Of 36 people surveyed, 25 already use voice somewhere. Non-users mostly report no barrier; they prefer typing. Voice users run into mixed-language recognition and the awkwardness of speaking aloud around others."
+  - "I ranked four solutions by effort and impact and prioritised a quiet mode: whisper to ChatGPT in a library or office. I built a clickable prototype of it."
+compareLeft: "Starting thesis | Low usage is mainly a discoverability problem"
+compareRight: "What the research showed | Non-users can find it, they prefer typing; Users go quiet when others are around; Mixed-language speech is misheard"
+compareStrike: left
+compareCaption: "The thesis I started with, and what 36 survey responses and five interviews pointed to instead."
+---
+
+## Context
+
+It started with my own habit. I'd been using Wispr Flow, an app that lets me dictate instead of type, and I liked it. That made me curious: if speaking is this easy, why don't more people use ChatGPT's voice mode?
+
+That question became my research problem across three milestones of the NextLeap Product Management Fellowship (Cohort 52): increase voice mode adoption in the ChatGPT mobile app in India.
+
+The first milestone was a three-slide deck: the voice landscape in India, a teardown of ChatGPT's voice experience against comparable products, and a KPI tree. The second was user research. The third was a problem definition with prioritised solutions and a prototype.
+
+## Problem
+
+India looks ready for voice. People send voice notes constantly. But a voice note is decoded by a human, who has no trouble with an accent or a sentence that switches between Hindi and English. Voice mode needs a model to get it right the first time.
+
+So the question was what actually holds voice mode back: can people not find it, does it not understand them, or is it something else? My first guess was the simplest one: people couldn't find the feature, or didn't know it existed.
+
+One thing I stated up front in the deck: "adoption is low" was the brief's premise, not something I could verify. There is no public data on ChatGPT voice usage in India. The first thing I'd ask for is the baseline, split by language.
+
+<Figure src="/images/voice-m1-slide1.png" alt="Slide titled: India is voice-note ready, not yet voice-assistant ready. Four headline numbers on internet and voice-note use in India, a market-size estimate, why the problem matters, and who would use voice mode." caption="Milestone 1, slide 1: the landscape, the market size and who would use voice mode." width={1600} height={900} />
+
+<Figure src="/images/voice-m1-slide2.png" alt="Slide titled: Discoverability caps trial. Recognition quality caps retention, and it is the binding constraint. Friction points in ChatGPT mobile, a Hindi word-error-rate benchmark, and six comparable products with the lesson from each." caption="Milestone 1, slide 2: the teardown and six comparables. This is where my starting thesis came from." width={1600} height={900} />
+
+## What I did
+
+<Flow steps="Landscape and teardown | Secondary research, 3 slides; Survey | 36 responses; Interviews | 5 one-to-one, across 3 user types; Hypotheses | 3 tested against the evidence; Solutions | 4 ranked, 1 prototyped" highlight="5" caption="The work across the three milestones." />
+
+I split users into three groups by behaviour: first-timers who have never used voice mode, aware users who know it exists but rarely use it, and heavy users. I interviewed people from all three.
+
+I wrote three hypotheses before the research and checked each one against what people said.
+
+<Bars data="Yes | 8; Occasionally | 17; No | 11" highlight="2" unit="people" caption="Do you use voice when using AI, searching or working? 36 responses. 25 of 36 use voice at least occasionally." />
+
+## Key decisions and tradeoffs
+
+**Who to target.** I chose aware users first, then heavy users. They already know the feature, so the gap is a reason to use it, not awareness. First-timers are the larger group but the harder one to move.
+
+**What to count as success.** My north star from the first milestone:
+
+> % of weekly active India users who complete at least one successful voice-originated task per week
+
+Counting voice sessions would go up when the model mishears and the user repeats themselves. A successful task is harder to instrument, but it is the thing that has to rise.
+
+<Figure src="/images/voice-m1-slide3.png" alt="Slide showing the KPI tree. The north star splits into adoption breadth and usage intensity, then into mic discovery, transcript success, first-use repeat, output consumption, task completion and session depth, with the roadmap test and guardrails below." caption="Milestone 1, slide 3: the KPI tree, measured among ChatGPT's own weekly active users in India." width={1600} height={900} />
+
+**Which solution to build first.** I ranked four solutions by effort against impact instead of picking the one that fixes the most-mentioned complaint.
+
+<Bars data="Quiet mode: whisper input for shared spaces | 14 | = 8 to 14 weeks; Fix the spoken prompt: ask a clarifying question | 5 | = 3 to 5 weeks; Pause and upload documents in voice mode | 16 | = 10 to 16 weeks; Better local and mixed-language recognition | 60 | = 9 to 14 months" highlight="1" caption="My estimate of time to ship each solution. Quiet mode came first: high impact for medium effort. Local-language recognition matters as much but is a model programme, not a feature." />
+
+The tradeoff is real. Better recognition for Hinglish and Gujarati would help more people. But it is 9 to 14 months of data collection, fine-tuning and evaluation. Quiet mode addresses a barrier people named and can ship in a quarter.
+
+## What I found
+
+<Figure src="/images/voice-m2-slide2.png" alt="Slide titled: People who skip voice mode aren't blocked. People who use it are. Three hypotheses with their outcomes, survey results for non-users and voice users, and five interview quotes by segment." caption="Milestone 2, slide 2: the three hypotheses, the survey and the interviews." width={1600} height={900} />
+
+**Non-users are not blocked.** Asked why they don't use voice mode, 82% of non-users named no barrier. They prefer typing or don't feel the need. Only 4% named an actual problem. That ruled out discoverability as the main issue: making the button more visible would not change a preference.
+
+**People who do use voice hit real problems.** 18 of the 25 voice users reported a concrete barrier: recognition and translation, or awkwardness.
+
+**Mixed-language speech is misheard.** One first-time user told me "hinglish and gujarati is translated as english". This was the one hypothesis the research confirmed.
+
+**Voice is used in private and dropped in public.** Students told me they use voice when alone and stop in libraries, reading rooms and offices. When I asked why, the reason was specific: they did not want to disturb the people around them.
+
+<Figure src="/images/voice-m2-slide3.png" alt="Slide titled: The true problem: people who use voice go silent when others are around. A six-part problem framing canvas covering who faces it, the true problem, why to solve it, the evidence, and the value for users and the business." caption="Milestone 2, slide 3: the problem framing canvas." width={1600} height={900} />
+
+**Two of my three hypotheses did not hold.** I expected long voice conversations to help with complex decisions. Heavy users said the opposite: it "keeps going off topic", and one said that "after 1 hour of conversation the voice feels awkward". I also expected hesitation to be about habit. It was about the product: "it interrupts frequently".
+
+**What it taught me.** Adoption isn't only about whether people can find a feature. How they feel using it, and where they are when they'd use it, can matter just as much.
+
+<Compare left="Did not hold | Long voice conversations help with complex decisions; People avoid voice only because they aren’t used to it" right="Held | Local and mixed-language recognition is a barrier" caption="The three hypotheses I wrote before the research, and how they fared." />
+
+## What I'd do differently
+
+- **A wider sample.** The 36 respondents were mostly students and working professionals. The local-language persona, someone in a tier 2 or tier 3 town who is less comfortable in English, is the one I reached least.
+- **Test the prototype with the people who raised the problem.** The next step is putting quiet mode in front of the students who said they go silent in libraries, and measuring whether they use it.
+- **Check background noise early.** The main risk I listed for quiet mode is that a whisper is lost in a noisy room. That needs a real test before any estimate of impact.
+
+## How it was built
+
+A survey, five one-to-one interviews, hands-on testing of voice mode, and secondary research for the landscape and comparables. The segmentation, hypotheses, synthesis and prioritisation are my own work.
+
+AI use: I used AI for secondary research and to lay out the slides shown on this page. The quiet-mode prototype was built with Lovable, an AI app builder.
+
+## Links
+
+- [Quiet mode prototype](https://whisper-mode-lab.lovable.app/)
+- [Milestone 1 deck: landscape, teardown and KPI tree (PDF)](/voice-mode-milestone-1.pdf)
+- [Milestone 2 deck: segmentation, research and problem framing (PDF)](/voice-mode-milestone-2.pdf)

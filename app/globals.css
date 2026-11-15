@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/* Light: oxblood on pure white */
+:root {
+  --paper: #ffffff;
+  --wash: #f6f6f5;
+  --ink: #111111;
+  --muted: #666666;
+  --rule: #e5e5e5;
+  --accent: #8a1c2b;
+  color-scheme: light;
+}
+
+/* Dark: carbon and coral. Applied when the visitor's device is in dark mode
+   (unless they chose light), or when they chose dark with the toggle. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0c0c0d;
+    --wash: #161617;
+    --ink: #f1f1ef;
+    --muted: #9a9a96;
+    --rule: #29292b;
+    --accent: #ee6468;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0c0c0d;
+  --wash: #161617;
+  --ink: #f1f1ef;
+  --muted: #9a9a96;
+  --rule: #29292b;
+  --accent: #ee6468;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-wash: var(--wash);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-plex-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 2rem;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+}
+
+/* Headline type: the one loud thing on the page */
+.display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+.finding {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.625rem, 1.2rem + 1.9vw, 2.375rem);
+  line-height: 1.14;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+.finding-sm {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.3125rem, 1.15rem + 0.7vw, 1.625rem);
+  line-height: 1.2;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+}
+
+/* Links */
+.link {
+  text-decoration: underline;
+  text-decoration-color: var(--muted);
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+.link:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+.title-link {
+  transition: color 120ms ease;
+}
+.title-link:hover {
+  color: var(--accent);
+}
+
+/* Theme toggle shows the mode you would switch to, without any JS state */
+.theme-toggle .when-dark {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .when-light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .theme-toggle .when-dark {
+    display: inline;
+  }
+}
+:root[data-theme="dark"] .theme-toggle .when-light {
+  display: none;
+}
+:root[data-theme="dark"] .theme-toggle .when-dark {
+  display: inline;
+}
+
+/* Long-form body copy (MDX) */
+.essay {
+  max-width: 40rem;
+}
+.essay > * + * {
+  margin-top: 1.15em;
+}
+.essay h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin-top: 2.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.essay h3 {
+  font-weight: 500;
+  font-size: 1.0625rem;
+  margin-top: 2rem;
+}
+.essay ul,
+.essay ol {
+  padding-left: 1.2rem;
+}
+.essay ul {
+  list-style: disc;
+}
+.essay ol {
+  list-style: decimal;
+}
+.essay li + li {
+  margin-top: 0.4em;
+}
+.essay li::marker {
+  color: var(--muted);
+}
+.essay a {
+  text-decoration: underline;
+  text-decoration-color: var(--muted);
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+.essay a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+.essay strong {
+  font-weight: 500;
+}
+.essay blockquote {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  line-height: 1.4;
+  padding-left: 1rem;
+  border-left: 2px solid var(--ink);
+}
+.essay code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--wash);
+  padding: 0.1em 0.3em;
+}
+.essay figure {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* One quiet entrance per page load */
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.page-in {
+  animation: page-in 220ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-in {
+    animation: none;
+  }
+  * {
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>ChatGPT voice mode adoption in India: milestone decks</title>
+<style>
+@font-face{font-family:"Newsreader";src:url("../../app/fonts/newsreader-latin-wght-normal.woff2") format("woff2");font-weight:200 800}
+@font-face{font-family:"Plex";src:url("../../app/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2");font-weight:400}
+@font-face{font-family:"Plex";src:url("../../app/fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2");font-weight:500}
+@font-face{font-family:"PlexMono";src:url("../../app/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");font-weight:400}
+:root{--paper:#fff;--wash:#f6f6f5;--ink:#111;--muted:#666;--rule:#dcdcdc;--accent:#8a1c2b;--bar:#b9b9b9}
+*{box-sizing:border-box;margin:0;padding:0}
+@page{size:1280px 720px;margin:0}
+body{font-family:"Plex",sans-serif;color:var(--ink);background:#ddd;font-size:16.5px;line-height:1.42}
+.slide{width:1280px;height:720px;background:var(--paper);padding:34px 48px 26px;display:flex;flex-direction:column;overflow:hidden;page-break-after:always;position:relative}
+.kicker{font-size:14px;color:var(--muted);display:flex;justify-content:space-between}
+h1{font-family:"Newsreader",serif;font-weight:400;font-size:36px;line-height:1.12;letter-spacing:-.012em;margin:6px 0 12px;max-width:1080px}
+.top{border-bottom:2px solid var(--ink);margin-bottom:16px}
+.grid{display:grid;gap:26px;flex:1;min-height:0}
+.g3{grid-template-columns:1fr 1fr 1fr}.g2{grid-template-columns:1fr 1fr}
+.gA2{grid-template-columns:.92fr .86fr 1.42fr}
+h2{font-size:16px;font-weight:500;border-top:1px solid var(--ink);padding-top:7px;margin-bottom:8px}
+h2.acc{border-top:2px solid var(--accent);color:var(--accent)}
+p+p{margin-top:7px}
+ul{list-style:none}li{padding:6px 0 6px 14px;position:relative}li:before{content:"";position:absolute;left:0;top:.72em;width:6px;height:1px;background:var(--ink)}
+b,strong{font-weight:500}
+.muted{color:var(--muted)}.acc{color:var(--accent)}.mono{font-family:"PlexMono",monospace;font-size:12.5px}
+.small{font-size:14.5px;line-height:1.4}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-bottom:16px}
+.num b{display:block;font-family:"Newsreader",serif;font-weight:400;font-size:54px;line-height:1;letter-spacing:-.02em}
+.num span{display:block;margin-top:5px;font-size:15px;color:var(--muted);line-height:1.35}
+.bar{margin:10px 0}.bar .l{display:flex;justify-content:space-between;gap:10px;font-size:15.5px}.bar .l span:last-child{font-family:"PlexMono",monospace;font-size:12.5px;white-space:nowrap}
+.bar .t{height:11px;background:var(--wash);margin-top:3px}.bar .t i{display:block;height:100%;background:var(--bar)}.bar.hi .t i{background:var(--accent)}.bar.hi .l span:first-child{font-weight:500}
+.band{margin-top:14px;border-left:2px solid var(--accent);background:var(--wash);padding:11px 16px;font-size:15.5px}
+.foot{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.35}
+table{border-collapse:collapse;width:100%;font-size:14.2px;line-height:1.35}
+th{text-align:left;font-weight:400;color:var(--muted);font-size:12px;padding:0 10px 5px 0;border-bottom:1px solid var(--ink)}
+td{vertical-align:top;padding:8px 10px 8px 0;border-bottom:1px solid var(--rule)}td:first-child{font-weight:500;width:21%}td:nth-child(2){width:41%}
+.tree{display:grid;grid-template-columns:270px 210px 1fr;gap:0 22px;align-items:center}
+.ns{border:2px solid var(--ink);padding:14px 16px}.ns small{color:var(--accent);font-size:12.5px;display:block;margin-bottom:4px}.ns div{font-family:"Newsreader",serif;font-size:24px;line-height:1.2}
+.ns p{font-size:13.5px;color:var(--muted);margin-top:8px;line-height:1.35}
+.br{display:grid;grid-template-rows:1fr 1fr;gap:16px;height:100%}
+.node{border-left:2px solid var(--ink);padding:6px 0 6px 12px;align-self:center}.node b{display:block}.node span{font-size:14px;color:var(--muted);display:block;line-height:1.35}
+.leaves{display:grid;gap:11px}.leaf{border-left:1px solid var(--ink);padding:4px 0 4px 12px}.leaf b{font-size:15.5px}.leaf span{display:block;font-size:14px;color:var(--muted);line-height:1.33}
+.leaf.hi{border-left:2px solid var(--accent)}.leaf.hi b{color:var(--accent)}
+.tag{display:inline !important;font-family:"PlexMono",monospace;font-size:12px !important;font-weight:400;border:1px solid currentColor;padding:1px 6px;margin-left:8px;white-space:nowrap;color:inherit}
+.seg{display:grid;grid-template-columns:1fr;gap:0}.seg div{padding:12px 0;border-bottom:1px solid var(--rule)}.seg b{display:block}.seg span{display:block;color:var(--muted);font-size:15px}.seg b .tag,.leaf b .tag{vertical-align:1px}.seg em{font-style:normal;display:block;font-size:15px;margin-top:3px}
+.q{padding:11px 0;border-bottom:1px solid var(--rule)}.q small{display:block;color:var(--muted);font-size:14px}.q i{font-family:"Newsreader",serif;font-style:italic;font-size:19px;line-height:1.3}
+.stat{display:flex;gap:12px;align-items:baseline;margin-bottom:6px}.stat b{font-family:"Newsreader",serif;font-weight:400;font-size:48px;line-height:1;letter-spacing:-.02em}.stat span{font-size:15.5px;line-height:1.35}
+.canvas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 26px;flex:1}
+.cell h2{margin-bottom:6px}.cell.hi{background:var(--wash);padding:0 12px 10px;margin:0 -12px}.cell.hi h2{border-top:2px solid var(--accent);color:var(--accent)}
+.cell.hi p.big{font-family:"Newsreader",serif;font-size:24px;line-height:1.25}
+</style></head><body>
+
+<!-- ============ MILESTONE 1 ============ -->
+<section class="slide">
+  <div class="top"><div class="kicker"><span>Increasing voice mode adoption, ChatGPT mobile, India</span><span>Milestone 1, slide 1 of 3: landscape</span></div>
+  <h1>India is voice-note ready, not yet voice-assistant ready</h1></div>
+  <div class="nums">
+    <div class="num"><b>958M</b><span>active internet users in India, up 8% in a year</span></div>
+    <div class="num"><b>57%</b><span>of them rural (548M), growing about 4 times the urban rate</span></div>
+    <div class="num"><b>48%</b><span>of Indians prefer or equally like receiving voice notes over text. Great Britain: 18%</span></div>
+    <div class="num"><b>7bn</b><span>WhatsApp voice messages sent per day, worldwide</span></div>
+  </div>
+  <div class="grid g3">
+    <div><h2>Market size</h2>
+      <div class="bar"><div class="l"><span>Users in India, the base used for sizing</span><span>330M</span></div><div class="t"><i style="width:100%"></i></div></div>
+      <div class="bar hi"><div class="l"><span>Potential voice users, 20 to 25%</span><span>66 to 82.5M</span></div><div class="t"><i style="width:25%"></i></div></div>
+      <div class="bar"><div class="l"><span>Current voice users</span><span>20 to 38M</span></div><div class="t"><i style="width:11.5%"></i></div></div>
+      <p class="small muted" style="margin-top:8px">My estimates. The gap between the last two rows is the opportunity: people who would use voice and don’t yet.</p>
+    </div>
+    <div><h2>Why this problem</h2>
+      <ul>
+        <li><b>Reach.</b> For a first-time smartphone user, typing is the gate, not comprehension. Mixing Hindi and English is effortless spoken and slow typed.</li>
+        <li><b>Defence.</b> Google ships voice in 25 Indian languages. OpenAI’s published India plans mention neither language nor voice.</li>
+        <li><b>The gap.</b> A voice note is decoded by a human, who handles accent, noise and Hinglish. Voice mode needs a model to get it right first time, or the turn is wasted.</li>
+      </ul>
+    </div>
+    <div><h2>Who would use it, and for what</h2>
+      <ul>
+        <li><b>Students:</b> exam preparation, assignments, code, talking an idea through.</li>
+        <li><b>Working professionals:</b> research and drafting between other tasks, where speaking is faster than typing.</li>
+        <li><b>People more at ease in a local language than in English:</b> asking in Hindi, Gujarati or a mix, without a keyboard.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="band"><b>The premise I’m flagging.</b> "Adoption is low" is the brief’s assumption, not a finding. There is no public data on ChatGPT voice usage in India. The first thing I would ask for is the baseline, split by language.</div>
+  <div class="foot">Sources: IAMAI and Kantar, Internet in India 2025. YouGov 17-market survey, November 2023 (India sample is urban). Meta. Market size is my own estimate.</div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="kicker"><span>Increasing voice mode adoption, ChatGPT mobile, India</span><span>Milestone 1, slide 2 of 3: UX teardown and comparables</span></div>
+  <h1>Discoverability caps trial. Recognition quality caps retention, and it is the binding constraint</h1></div>
+  <div class="grid gA2">
+    <div><h2 class="acc">Friction points in ChatGPT mobile</h2>
+      <ul class="small">
+        <li><b>Two icons, two products.</b> The mic is dictation; the voice icon is spoken conversation. They sit side by side, unlabelled.</li>
+        <li><b>Inconsistent surface.</b> Voice opens inline in the chat or as a separate full screen, depending on rollout.</li>
+        <li><b>Language is auto-detected by default,</b> which is the failure case for someone switching between Hindi and English. The fix is three levels deep in settings.</li>
+        <li><b>Interruptions.</b> OpenAI’s own advice is headphones or a quieter room, which is unrealistic in shared spaces.</li>
+        <li><b>No tools in voice.</b> No image generation, no file upload.</li>
+        <li><b>Free tier</b> runs a smaller voice model, and most users in India are on Free or Go.</li>
+      </ul>
+    </div>
+    <div><h2>Hindi word error rate, lower is better</h2>
+      <div class="bar"><div class="l"><span>Sarvam Audio</span><span>5.0</span></div><div class="t"><i style="width:14.7%"></i></div></div>
+      <div class="bar"><div class="l"><span>Gemini 3 Pro</span><span>6.0</span></div><div class="t"><i style="width:17.7%"></i></div></div>
+      <div class="bar"><div class="l"><span>Indic Conformer</span><span>8.2</span></div><div class="t"><i style="width:24.2%"></i></div></div>
+      <div class="bar hi"><div class="l"><span>GPT-4o Transcribe</span><span>33.9</span></div><div class="t"><i style="width:100%"></i></div></div>
+      <p class="small" style="margin-top:9px">Around 20 is the practical limit for usability. Beyond Hindi the same benchmark reports Gujarati 98.2, Malayalam 97.0 and Tamil 64.2 for OpenAI’s model.</p>
+      <p class="small muted">Caveat: this tests OpenAI’s API transcriber, not the shipping app, which was updated after the evaluation. I read it as a sign of weakness in Indian-language speech, not a measurement of the app.</p>
+    </div>
+    <div><h2>Six comparables and what each one teaches</h2>
+      <table>
+        <tr><th>Product</th><th>How it treats voice</th><th>Lesson</th></tr>
+        <tr><td>Google Gemini Live</td><td>An entry point across Search, Assistant and Gemini, in 25 Indian languages</td><td>Quality came before adoption</td></tr>
+        <tr><td>WhatsApp voice notes</td><td>Voice as a message, not a command</td><td>The speaking habit exists; it needs no recognition</td></tr>
+        <tr><td>Amazon Alexa+ India</td><td>English in 2017, Hindi in 2019, conversational Hindi in beta in June 2026</td><td>Indian-language voice takes years, not a sprint</td></tr>
+        <tr><td>Sarvam AI</td><td>Built for Indian languages and mixed-language speech</td><td>Local and mixed-language transcription can work</td></tr>
+        <tr><td>Wispr Flow</td><td>Picks up a whisper and copes with low-audio settings</td><td>Voice can work in quiet, shared spaces</td></tr>
+        <tr><td>Claude voice mode</td><td>Shows the transcript live as you speak</td><td>Seeing the text makes a spoken turn easy to check</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot">Sources: OpenAI Help Center, Voice Mode FAQ. Bhogale et al., Voice of India, arXiv:2604.19151. Google India Blog. TechCrunch. Product observations are from my own research.</div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="kicker"><span>Increasing voice mode adoption, ChatGPT mobile, India</span><span>Milestone 1, slide 3 of 3: KPI tree</span></div>
+  <h1>Measured in successful tasks, not taps on the mic</h1></div>
+  <div class="tree" style="flex:1">
+    <div class="ns"><small>North star</small><div>% of weekly active India users who complete at least one successful voice-originated task per week</div>
+      <p>Not voice sessions per user: that rises when the model mishears and the user repeats. Every metric here is measured among ChatGPT’s own weekly active users in India.</p></div>
+    <div class="br">
+      <div class="node"><b>Adoption breadth</b><span>Voice users as a share of ChatGPT’s weekly active users in India</span></div>
+      <div class="node"><b>Usage intensity</b><span>Voice messages as a share of all messages, per voice user</span></div>
+    </div>
+    <div class="leaves">
+      <div class="leaf"><b>Mic discovery</b><span>Of users shown the entry point, the share who tap it for the first time</span></div>
+      <div class="leaf hi"><b>Transcript success <span class="tag">bottleneck</span></b><span>Share of voice turns sent without editing, by language</span></div>
+      <div class="leaf"><b>First-use repeat <span class="tag">the test</span></b><span>Of first-time voice users, the share who return within 7 days of a successful voice turn</span></div>
+      <div class="leaf hi"><b>Output consumption <span class="tag">bottleneck</span></b><span>Whether the reply is heard or read, and reply length against typed turns</span></div>
+      <div class="leaf"><b>Task completion</b><span>Session success for voice against typed, and how often users switch to typing mid-session</span></div>
+      <div class="leaf"><b>Session depth</b><span>Voice turns per conversation, and time to second use after a first success</span></div>
+    </div>
+  </div>
+  <div class="grid g2" style="flex:none;margin-top:16px">
+    <div><h2>The test that decides the roadmap</h2>
+      <p class="small"><b>Low trial, high retention</b> means discoverability: surface the mic, which is cheap and fast. <b>High trial, low retention</b> means recognition: surfacing cannot fix it. Measure first-attempt rate and week 1 to week 4 voice retention together, split by language, before funding either.</p></div>
+    <div><h2>Guardrails</h2>
+      <p class="small"><b>Total messages per user must not fall:</b> voice should add reach, not replace typing for people the keyboard already serves. <b>Overall session success must hold:</b> if pushing voice drags it down, stop promoting and start fixing.</p></div>
+  </div>
+  <div class="foot">The north star, tree and guardrails are my own.</div>
+</section>
+
+<!-- ============ MILESTONE 2 ============ -->
+<section class="slide">
+  <div class="top"><div class="kicker"><span>Increasing voice mode adoption, ChatGPT mobile, India</span><span>Milestone 2, slide 1 of 3: user segmentation</span></div>
+  <h1>Three segments, by how people use voice mode today</h1></div>
+  <div class="grid g3">
+    <div><h2>The segments</h2>
+      <div class="seg">
+        <div><b>First-timers</b><span>Have never used voice mode.</span><em>What would make them try it once?</em></div>
+        <div><b>Aware users</b><span>Know it exists, rarely use it.</span><em>Why do they use it less than they could?</em></div>
+        <div><b>Heavy users</b><span>Use it regularly.</span><em>Why, when and for what do they use it?</em></div>
+      </div>
+      <p class="small muted" style="margin-top:8px">Split by behaviour, so each person falls in exactly one group.</p>
+    </div>
+    <div><h2>Survey: do you use voice when using AI, searching or working?</h2>
+      <div class="bar"><div class="l"><span>Yes</span><span>8 of 36</span></div><div class="t"><i style="width:47%"></i></div></div>
+      <div class="bar hi"><div class="l"><span>Occasionally</span><span>17 of 36</span></div><div class="t"><i style="width:100%"></i></div></div>
+      <div class="bar"><div class="l"><span>No</span><span>11 of 36</span></div><div class="t"><i style="width:64.7%"></i></div></div>
+      <p style="margin-top:10px"><b>25 of 36</b> already use voice somewhere, so the habit exists.</p>
+      <p><b>77.8%</b> use or are aware of ChatGPT’s voice features. Awareness is not the gap.</p>
+      <p class="small muted">Respondents were mostly students and working professionals.</p>
+    </div>
+    <div><h2 class="acc">Target: aware users first, then heavy users</h2>
+      <p>They already know the feature, so the gap is a reason to use it, not awareness. They are also the likeliest to use it more often and to pay.</p>
+      <div style="margin-top:12px">
+      <div class="bar"><div class="l"><span>Users in India, the base used for sizing</span><span>330M</span></div><div class="t"><i style="width:100%"></i></div></div>
+      <div class="bar hi"><div class="l"><span>Potential voice users, 20 to 25%</span><span>66 to 82.5M</span></div><div class="t"><i style="width:25%"></i></div></div>
+      <div class="bar"><div class="l"><span>Current voice users</span><span>20 to 38M</span></div><div class="t"><i style="width:11.5%"></i></div></div>
+      </div>
+      <p class="small muted" style="margin-top:6px">My estimates.</p>
+    </div>
+  </div>
+  <div class="foot">Source: my own survey, 36 responses.</div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="kicker"><span>Increasing voice mode adoption, ChatGPT mobile, India</span><span>Milestone 2, slide 2 of 3: user research</span></div>
+  <h1>People who skip voice mode aren’t blocked. People who use it are</h1></div>
+  <div class="grid g3">
+    <div><h2>Three hypotheses, tested</h2>
+      <div class="seg">
+        <div><b>1. Long voice conversations help with complex decisions <span class="tag muted">did not hold</span></b><span>Heavy users said it drifts off topic and struggles with in-depth tasks.</span></div>
+        <div><b>2. People avoid voice because they aren’t used to it <span class="tag muted">did not hold</span></b><span>The hesitation came from the product: interruptions, slow replies, lost context.</span></div>
+        <div><b class="acc">3. Local-language recognition is a barrier <span class="tag">held</span></b><span>Hinglish and Gujarati were transcribed as English.</span></div>
+      </div>
+    </div>
+    <div><h2>Survey</h2>
+      <div class="stat"><b>82%</b><span>of non-users name no barrier to voice mode. They prefer typing or don’t feel the need. Only 4% named an actual problem.</span></div>
+      <div class="stat" style="margin-top:10px"><b class="acc">18 of 25</b><span>voice users hit a concrete barrier.</span></div>
+      <div class="bar hi"><div class="l"><span>Translation: what you say isn’t what it writes</span><span>31.6%</span></div><div class="t"><i style="width:100%"></i></div></div>
+      <div class="bar"><div class="l"><span>Don’t feel like using voice</span><span>31.6%</span></div><div class="t"><i style="width:100%"></i></div></div>
+      <div class="bar hi"><div class="l"><span>Feeling awkward speaking in public</span><span>15.8%</span></div><div class="t"><i style="width:50%"></i></div></div>
+      <p class="small muted" style="margin-top:6px">Challenges named by voice users. Smaller answers not shown.</p>
+    </div>
+    <div><h2>One-to-one interviews, by segment</h2>
+      <div class="q"><small>First-timer</small><i>“hinglish and gujarati is translated as english”</i></div>
+      <div class="q"><small>Aware user</small><i>“it is way too diplomatic” and “it interrupts frequently”</i></div>
+      <div class="q"><small>Aware user</small><i>“it keeps going off topic” and “it is slow”</i></div>
+      <div class="q"><small>Heavy user</small><i>“can’t effectively pull information from the internet”</i></div>
+      <div class="q"><small>Heavy user</small><i>“after 1 hour of conversation the voice feels awkward”</i></div>
+    </div>
+  </div>
+  <div class="foot">Source: my own survey, 36 responses, and five one-to-one interviews across the three segments.</div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="kicker"><span>Increasing voice mode adoption, ChatGPT mobile, India</span><span>Milestone 2, slide 3 of 3: problem framing canvas</span></div>
+  <h1>The true problem: people who use voice go silent when others are around</h1></div>
+  <div class="canvas">
+    <div class="cell"><h2>1. Who is facing it?</h2><p>Students and working professionals who already use voice mode in private, and spend their day in libraries, reading rooms and offices.</p></div>
+    <div class="cell hi"><h2>2. What is the true problem?</h2><p class="big">They won’t speak to ChatGPT aloud in a shared space, because they don’t want to disturb the people near them.</p><p class="small muted">Asked why voice felt awkward, this was the reason underneath.</p></div>
+    <div class="cell"><h2>3. Why should we solve it?</h2><p>The habit is already there: 25 of 36 people surveyed use voice somewhere. The setting is what stops them, and the potential base is 66 to 82.5 million users.</p></div>
+    <div class="cell"><h2>4. How do we know it’s real?</h2><p>18 of 25 voice users named a concrete barrier, awkwardness in public among them. In interviews, users said they use voice when alone and stop in public settings.</p></div>
+    <div class="cell"><h2>5. Value for users</h2><p>Voice becomes usable in the places where they actually study and work. Speaking a prompt is faster than typing it.</p></div>
+    <div class="cell"><h2>6. Value for business</h2><p>Illustration: if 5% of 82 million potential users, about 4.1 million, took Go or Plus in equal numbers: 2.05M × ₹399 + 2.05M × ₹1,999, about ₹492 crore a month.</p></div>
+  </div>
+  <div class="band"><b>Also found, and set aside for now:</b> mixed-language recognition for Hinglish and Gujarati; giving full context in one spoken request; long conversations drifting off topic.</div>
+  <div class="foot">Source: my own survey and interviews. Business value is an illustration, not a forecast.</div>
+</section>
+</body></html>

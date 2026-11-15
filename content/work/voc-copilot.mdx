@@ -1,0 +1,108 @@
+---
+title: VoC Copilot
+kind: Curiosity project
+order: 2
+finding: "Bad support isn’t a complaint theme. It’s an amplifier: “customer care” was the main complaint only 40% of the times it came up."
+counts: "13,000 reviews over 30 days. 4,126 with real content. 1,633 inside a theme. 182 labelled by hand."
+description: "What do 13,000 Play Store reviews of Swiggy actually say? I clustered them into complaint themes ranked by count, with every claim traceable to the reviews behind it."
+summary:
+  - "I pulled 13,000 public Play Store reviews of Swiggy from 30 days and clustered them into 15 complaint themes, ranked by how many reviews each contains."
+  - "“Customer care” came up almost as often as late delivery, but it was the main complaint only 40% of the time. It rides on top of other failures."
+  - "Scored against 182 reviews I labelled by hand, the clustering agreed with me 21% of the time. It tells you where to look, not what to conclude."
+split:
+  value: 84
+  label: "1 or 5 stars"
+  rest: "2 to 4 stars"
+  caption: "Star ratings across the 13,000 reviews: 10,980 are either 1-star or 5-star."
+---
+
+## Context
+
+This one grew out of my voice mode research. While interviewing people, I found I was more interested in the frustrations they described than in voice itself. It made me think about a wider problem: product teams get thousands of reviews, complaints and support tickets. How do they actually make sense of them?
+
+Reading everything isn't practical, and counting complaints doesn't always show the problem underneath. I wanted to see how far AI could help a PM get from "what are people complaining about" to "what are they actually struggling with".
+
+So I asked a simple question, what do 13,000 reviews actually say, and picked Swiggy's main app on the Play Store and collected every review from 16 August to 15 September 2026. That came to 13,000 reviews, about 430 a day.
+
+## Problem
+
+Nobody can read 13,000 reviews, and a summary you can't check is not much better than not reading them. Two things made this corpus harder than it looks.
+
+Most reviews say nothing. 68% were four words or shorter: "good", "worst", a thumbs-up. Only 4,126 had real content.
+
+<Bars data="Collected | 13,000; With real content | 4,126; Inside a named theme | 1,633" highlight="3" caption="Where the 13,000 reviews went. 1,633 ended up inside a named complaint theme; the rest fit no theme and were left out." />
+
+The ratings are U-shaped. 84% of reviews are either 1-star or 5-star, and of the 7,162 five-star reviews almost none are longer than four words. Happy users say nothing, so the usable complaints are essentially the 1-star and 2-star pile.
+
+<Bars data="5 stars | 7,162; 4 stars | 1,136; 3 stars | 570; 2 stars | 314; 1 star | 3,818" highlight="5" caption="Star ratings of all 13,000 reviews." />
+
+## What I did
+
+<Flow steps="Scrape | 13,000 reviews, 30 days; Clean | 4,126 with real content; Cluster | Embeddings, then HDBSCAN; Name by hand | 15 complaint themes; Score | Against 182 hand labels; Dashboard | Each theme opens its reviews" highlight="4" caption="The pipeline. Naming and merging the clusters was the one step done entirely by hand." />
+
+1. Scraped 30 days of reviews into a local database and never modified the raw rows, so every quote resolves to an unedited source.
+2. Cleaned them: dropped reviews under five words, removed duplicates, normalised stretched words.
+3. Turned each review into a multilingual sentence embedding, reduced it with UMAP and clustered with HDBSCAN.
+4. Read the clusters and named them by hand. Praise clusters and an unsorted mix of regional languages were left out. That left 15 complaint themes.
+5. Sampled 200 reviews and labelled 182 of them myself, to have an answer key to score the clustering against.
+6. Built a searchable dashboard where each theme opens to the verbatim reviews behind it, ordered by how many other users marked them helpful.
+
+<Figure src="/images/voc-dashboard-v1.png" alt="The VoC Copilot dashboard: counts of reviews collected, with real content and inside a theme, a note on what the numbers are not, and a table of keyword signals across themes." caption="The v1 dashboard. The note under the three counts states what the numbers are not, including the 21% agreement score." width={1440} height={900} />
+
+## Key decisions and tradeoffs
+
+**Thirty days instead of six months.** My spec said six months and 5,000 reviews. A 200-review test pull showed about 430 reviews a day, which makes those two numbers disagree by a factor of twenty. I cut the window to 30 days and gave up seeing seasonal change in exchange for a corpus I could iterate on.
+
+**Minimum theme size 40 instead of 15.** I set 15 before I had data. On 4,126 reviews it produced 63 fragments, with one theme scattered across eleven of them. Raising it to 40 gave readable themes. The cost: a real complaint about inflated delivery distances, 27 reviews, sits below the line and never surfaces.
+
+**Rank by plain count.** I considered weighting themes by severity and by stated intent to leave. I shipped frequency only, because a ranking I can explain in one sentence beats one I can't defend.
+
+**Counts, not adjectives.** Every claim in the tool is a number with the reviews behind it. Play Store has no public link for a single review, so a citation here means the verbatim text, rating and date.
+
+## What I found
+
+<Bars data="Delivery runs far past the ETA, and cancelling costs money | 486; Support gives scripted non-answers, nobody takes accountability | 242; Fees stack up: platform, packaging, surge, delivery | 181; Refunds denied, partial or delayed after a failed order | 144; Users explicitly switching to Zomato | 78" highlight="2" unit="reviews" caption="The five largest complaint themes by number of reviews." />
+
+**Support failure is an amplifier, not a theme.** In my hand-labelled sample, "customer care" was mentioned almost as often as delivery delay. But it was the primary complaint only 40% of the time it appeared. The order goes wrong first; the support experience is what turns an annoyance into a one-star review. That is also why it resisted clustering: it is spread across most other complaints. Counting complaints alone would have pointed at support as the problem. Reading them showed it was more often a symptom of something that had already gone wrong.
+
+<Bars data="Delay or late | 367; Cancellation | 275; Fees or charges | 275; Support or chatbot | 273; Refund | 225" highlight="4" unit="reviews" caption="Keyword counts across all 1,633 themed reviews, independent of clustering. A review mentioning several is counted in each. Support shows up 273 times, well above the 242 reviews in its own theme." />
+
+**Volume and agreement run in opposite directions.** The biggest theme's top review has 21 "helpful" votes. The most-upvoted review inside any theme has 150, and it sits in the smallest one: hidden fees and paid benefits not being honoured. The most-upvoted review in the whole corpus, 2,590 votes, about insects in the food and support brushing it off, was never clustered at all. People write about late delivery; they endorse complaints about being overcharged. Ranking by count buries the second kind.
+
+<Bars data="Top review in the largest theme, late delivery | 21; Top review in any theme, hidden fees | 150; Top review in the whole corpus, never clustered | 2,590" highlight="3" unit="helpful votes" caption="Helpful votes on single reviews. The most-endorsed complaint in the corpus is one the clustering never placed." />
+
+**The agreement score is 21%.** When I said two reviews described the same complaint, the clustering agreed 21% of the time. Reading the output confirms it: roughly a quarter of the reviews in any theme belong somewhere else. This narrows 13,000 reviews to a dozen places worth looking. It does not classify reliably enough to act on without reading the evidence.
+
+Two limits on what any of this means. Reviewers are a self-selected, mostly angry minority, so this measures public complaints, not user experience. And 486 reviews about late delivery says nothing about how many orders were late.
+
+## What I'd do differently
+
+- **Set the product rule and the model parameter together.** I said "show anything above 15 reviews" and separately set the clustering minimum to 40. They disagreed, and everything between 15 and 40 became invisible.
+- **Let a review hold more than one complaint.** About 18% of reviews describe two or more problems, but each is filed under one theme. A keyword count across themes showed chatbot complaints at more than double their theme size.
+- **Show endorsement beside volume.** Helpful votes tell a different story from counts, and the tool ranks by counts alone.
+- **Handle language before clustering.** Romanised Hinglish landed correctly inside themes, but delivery complaints in Hindi and in English formed separate clusters.
+
+Version 2 turned the one-off snapshot into a daily job. It fetches new reviews each evening, places each one in the nearest existing theme or holds it in an unassigned bucket, re-ranks the themes, and adds a local app for flagging wrong placements. In its first two weeks, 26 one-star and two-star reviews were placed in praise clusters, 1.8% of everything assigned. I documented that as a known limitation instead of adding more thresholds.
+
+These frames are from my one-minute walkthrough of version 2, recorded on 20 October 2026, about five weeks into daily runs. By then it had collected 27,410 reviews and the themes had been merged down to 11.
+
+<Figure src="/images/voc-v2-overview.png" alt="The VoC Copilot version 2 dashboard home: Swiggy Voice of Customer, daily. Counts of 27,410 reviews collected, 8,572 with real content, 3,424 in a complaint theme across 11 themes, and 238 in the unassigned bucket, above a section titled How far to trust this." caption="Version 2 home. The note under the counts says how far to trust them." width={976} height={511} />
+
+<Figure src="/images/voc-v2-themes.png" alt="The ranked list of complaint themes in version 2: support fails to resolve with 804 reviews, delivery runs far past the ETA with 781, fees, pricing and offers with 554, and refunds with 292, each with a weekly volume chart and its most-endorsed review." caption="Themes ranked by review count, each with weekly volume and its most-endorsed review. With five weeks of data, support moved to first place." width={976} height={511} />
+
+<Figure src="/images/voc-v2-trends.png" alt="The Trends page: a table of each complaint theme's rank after every daily run, with arrows where a rank changed." caption="Each theme's rank after every daily run, so a rising complaint shows up as soon as it moves." width={976} height={511} />
+
+<Figure src="/images/voc-v2-bucket.png" alt="The Bucket page: reviews that fit no existing theme, re-clustered into candidate clusters awaiting review, each with its size, dates, star split and nearest existing themes." caption="Reviews that fit no existing theme are held here and re-clustered, so a new complaint can surface without forcing it into an old one." width={976} height={511} />
+
+## How it was built
+
+Python, google-play-scraper, SQLite, sentence-transformers (a multilingual MiniLM model), UMAP, HDBSCAN and pandas. Version 2 adds Flask and a scheduled daily run.
+
+What was mine: the question, the PRD, the scope, the hand-labelled set, the theme names and merges, and every threshold and tradeoff above.
+
+What AI did: I used Claude as a pair-programmer throughout, for scaffolding the scripts and diagnosing clustering failures, and Claude Code for the version 2 code. It laid out options; I made the calls.
+
+## Links
+
+- [VoC Copilot V1 on GitHub](https://github.com/Sam-732/VoC-Copilot-V1): the snapshot pipeline, dashboard and hand-labelled set
+- [VoC Copilot V2 on GitHub](https://github.com/Sam-732/VoC-Copilot-V2): the daily pipeline and local app

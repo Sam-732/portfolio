@@ -1,0 +1,89 @@
+---
+title: GrowPulse
+kind: RAG product
+order: 3
+finding: "An AI judge approved two claims it shouldn’t have. So in GrowPulse the model only sorts: code owns every number, quote and link."
+counts: "12,800 Groww reviews. 49 automated checks with no AI in them. Nothing is published without a typed approval."
+description: "GrowPulse turns Groww app reviews into a weekly product pulse and a fact-checked fee explainer. This case study is about its guardrails: how it avoids making claims it can't support."
+summary:
+  - "GrowPulse turns Play Store reviews of Groww into a weekly product pulse and a fee explainer built only from Groww's own pricing pages."
+  - "One rule runs through it: the AI sorts, code counts. The model never produces a number, a quote or a link."
+  - "A second model checking the first still passed two bad claims, so I added a check that every claim carries word-for-word evidence from its source."
+bars: "Complaint only | 247; Unrelated | 42; Confused about a fee | 28; Praise | 23"
+barsHighlight: 3
+barsCaption: "340 reviews matched fee keywords. The model sorted them into four labels; code did the counting."
+---
+
+## Context
+
+GrowPulse was a project for my NextLeap cohort. Coming off VoC Copilot, where AI had helped me sort thousands of reviews, I got interested in a different question: how much should a product team trust an insight that AI produced?
+
+GrowPulse reads public Play Store reviews of Groww, an Indian investing app, and produces two things each week: a one-page product pulse (top themes, real quotes, three action ideas) and a short explainer for whichever fee is confusing users most. It is an independent student project and is not affiliated with Groww.
+
+## Problem
+
+Both outputs are meant to be read by people who will act on them, and one of them explains what a financial product charges. A language model will happily write "brokerage is ₹20 per order" whether or not the source says so, and it will invent a percentage if you ask for a summary.
+
+So the product question was not "can it write a pulse?" It was: what would have to be true for a reader to trust a number in it without checking?
+
+## What I did
+
+<Bars data="Reviews fetched | 12,800; Clean: 4+ words, deduplicated, personal details removed | 3,831; Sampled: 150 a week for 12 weeks | 1,800" highlight="3" caption="The review set behind the themes. Fee detection ran on all 3,831 clean reviews." />
+
+<Figure src="/images/growpulse-home.png" alt="The GrowPulse home page: 1,800 reviews analysed, top issue customer support and service with 198 of 234 reviews at one or two stars, fee confusion pointing at brokerage with 5 of 28 confused reviews, and the last publish marked done." caption="The live app's home page. Every number on it is computed by code." width={1184} height={958} />
+
+1. Scraped and cleaned the reviews, then sampled 150 a week across 12 weeks.
+2. Had the model sort each review into one of at most five themes. Python counted and ranked them.
+3. Found the most confusing fee: 340 reviews matched fee keywords, the model labelled each one, code counted the labels.
+4. Fetched Groww's official pricing and help pages and generated the fee explainer from those pages only.
+5. Built an approval step: the exact text is shown, and nothing is written anywhere until a person types APPROVE.
+6. Wrote a validator with no AI in it that re-checks everything from scratch.
+
+## Key decisions and tradeoffs
+
+<Flow steps="Model sorts | Labels each review; Code counts | Every number and rank; Evidence check | Word-for-word snippet; Second model | Judges each claim; Validator | 49 checks, no AI; Person approves | Types APPROVE" highlight="6" caption="What a claim has to pass before it reaches the Google Doc or the email draft." />
+
+**The AI sorts, code counts.** The model assigns labels. It never produces a count, a percentage or a ranking, and the pulse text it writes is rejected if it contains a digit. Python computes every number and inserts it. The cost is stiffer writing; the gain is that no number on the page can be made up.
+
+**Quotes are copied, not generated.** Each quote is taken from the review file by code and verified character for character. If the model's pick isn't an exact match, code falls back to the review's own text.
+
+**The ranking rule was written before the first run.** Themes rank by their number of 1-star and 2-star reviews, with tie-breaks spelled out in advance. I couldn't adjust the rule after seeing which theme I expected to win.
+
+**Every explainer line needs evidence.** Each bullet must cite an allowed source, carry a word-for-word snippet that exists in that source, and use only numbers that appear there. A second, larger model then judges whether the claim is directly stated. A rejected bullet is regenerated once, then dropped. If fewer than three survive, the output is marked as needing human review and publishing is blocked.
+
+<Figure src="/images/growpulse-evidence.png" alt="An explainer bullet with its evidence panel open: the first draft was rejected by the code check because its evidence was not a word-for-word excerpt of the cited source, then rewritten once and passed the judge." caption="The evidence check at work: the first draft of this bullet was rejected by code and rewritten before the judge saw it." width={1184} height={958} />
+
+**It can draft, never send.** Publishing goes through a server that exposes exactly three tools: read the doc, append to the doc, create an email draft. There is no send tool, and the code refuses to run if one appears. The cost is a manual step every week. For something that explains fees to customers, I wanted that step.
+
+## What I found
+
+<Bars data="Customer support and service | 198 | of 234; App performance and stability | 190 | of 278; Feature requests and improvements | 70 | of 244; Fees and charges | 68 | of 125; Positive experience and ease of use | 23 | of 919" highlight="1" caption="Themes ranked by number of 1-star and 2-star reviews, out of each theme's total, in the 1,800-review sample." />
+
+**A model checking a model was not enough.** When I audited an early run by hand, the judge had accepted one bullet attributed to the wrong source and one that claimed more than the source said. Both read fine. That is why the word-for-word evidence check exists: it was added after the audit, not designed up front.
+
+**The fee signal is small, and the product says so.** Of 340 fee-related reviews, 28 showed real confusion. Of those, 5 pointed at brokerage and 18 named no specific fee at all. Brokerage is the best-supported guess, not a measured majority, and the output says "5 of 28" instead of "users are confused about brokerage".
+
+**The checks hold.** The validator runs 49 checks without any AI: it recounts every theme from scratch, confirms every number in the explainer appears in its cited source, and confirms that eight kinds of bad input are rejected. All 49 passed on the published run.
+
+<Figure src="/images/growpulse-checks.png" alt="The Checks page: 49 of 49 checks passed across 8 areas, data, themes, quotes, fee, pulse, explainer, safety and bad inputs, run by validate.py." caption="The validator's results in the live app: 49 of 49 checks across eight areas, with no AI involved." width={1184} height={958} />
+
+**What it taught me.** Making an AI product better isn't always about letting the model do more. Sometimes it's about giving it less responsibility and building reliable checks around it.
+
+## What I'd do differently
+
+- **Label a sample by hand first.** The theme assignments come from one model pass with no human answer key. I had one in VoC Copilot and its absence here is the weakest part of this project.
+- **Store the judge's verdicts.** They aren't saved, so the validator can only confirm which bullets survived, not why the others were dropped.
+- **Use more than two source pages.** Groww's own pages disagree in places, and the pricing table loses its column headers when converted to text.
+
+## How it was built
+
+Python, Streamlit for the app, models served through Groq (a smaller one to sort and write, a larger one to judge), and an n8n server for the Google Doc and Gmail draft steps.
+
+What was mine: the product rules above, the ranking and selection rules written before the runs, the manual audit that caught the two bad bullets, and the limitations list.
+
+What AI did: the code was written with AI coding assistance, working from my spec. I can explain what each stage does and why; I did not hand-write the Streamlit app.
+
+## Links
+
+- [GrowPulse on GitHub](https://github.com/Sam-732/GrowPulse)
+- [Live app](https://growpulse12312.streamlit.app), hosted on Streamlit, so it can take a moment to wake up

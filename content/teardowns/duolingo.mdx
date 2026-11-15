@@ -1,0 +1,41 @@
+---
+title: "Duolingo’s streak doesn’t sell lessons. It sells insurance against losing them"
+product: Duolingo
+date: "2026-11-13"
+summary: "The streak makes the daily minimum tiny and the loss feel large. The Streak Freeze then sells protection against that loss, and it only works if you buy it in advance."
+description: "A short product teardown of Duolingo's streak: how it turns a small daily action into something people pay to protect, where that stops serving learning, and what I would test."
+---
+
+## What it's for
+
+Duolingo's real competitor is not another language app. It is not opening the app today. The streak, the count of consecutive days you have practised, is the feature built to win that fight.
+
+## How it works
+
+<Compare left="What keeps a streak alive | One lesson a day, any length; A Streak Freeze equipped beforehand" right="What doesn’t count | How much you practised; How hard the lesson was; Buying a freeze after you miss" caption="The rules of the streak. The bar to keep it is deliberately low; the only way to protect it is to plan ahead." />
+
+<Flow steps="One lesson | Any length counts; Streak goes up | The number is the reward; Number follows you | Widget and evening reminder; Miss a day | A freeze is spent, or the count resets" highlight="4" caption="The daily loop. Everything before the last step makes the number matter; the last step is where it can be lost." />
+
+Three design choices do the work.
+
+**The minimum is tiny.** One lesson keeps the streak. Ten XP and a hundred XP count the same. The product is not asking "did you learn enough today?" It is asking "did you show up?"
+
+**The number lives outside the app.** A home-screen widget and an evening notification keep the streak count in view, so the reminder is the specific number you stand to lose.
+
+**Protection is sold as insurance.** A Streak Freeze covers one missed day, but only if it was equipped before that day. You can hold two at a time. Duolingo has written that letting learners equip two freezes instead of one raised daily active learners, which tells you how the team sees it: forgiveness keeps more people than strictness does.
+
+## Where it stops serving the user
+
+**It optimises for returning, not for learning.** Because one short lesson counts the same as a long one, the cheapest way to keep a streak is the easiest lesson available. A 500-day streak measures 500 days of opening the app. It is a habit metric presented as a progress metric.
+
+**A long streak is a cliff.** The bigger the number, the worse the break. When a long streak resets to zero, the user has lost the main reason to open the app that day. In June 2026 Duolingo ran a limited event letting people with a past streak of 30 days or more restore it by completing three lessons, which suggests the team sees broken streaks as a place where users are lost.
+
+## What I'd test
+
+When a streak of 30 days or more breaks, don't reset it to zero. Offer a softer goal: keep the count, switch to "five days a week" for the next month.
+
+- **Why:** the reset punishes exactly the users who have shown the most commitment, at the moment they are most likely to quit. A weekly goal keeps the habit and removes the cliff.
+- **The tradeoff:** the streak works because losing it hurts. Make it too forgiving and it stops pulling people back on the days they would otherwise skip. It may also reduce freeze purchases.
+- **How I'd measure it:** the share of users with a broken 30-day streak who are still active 30 days later. Guardrail: lessons per active learner per week among people who still have their streak. If that drops, the softer option is leaking into everyone's behaviour.
+
+Mechanics are from [Duolingo's own write-up of the streak](https://blog.duolingo.com/how-duolingo-streak-builds-habit) and its app, checked on 15 November 2026. The analysis is my own and I have no access to Duolingo's data.

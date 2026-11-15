@@ -1,0 +1,78 @@
+---
+title: "Hevy is basic, and that’s why it’s my favourite product"
+product: Hevy
+favourite: true
+date: "2026-11-15"
+summary: "For a habit product, friction matters more than features. Hevy wins on the ten seconds between sets, and that is the only moment that counts."
+description: "A product teardown of Hevy, the gym workout tracker: why a basic app wins a habit, where it beats Strong and a notes app, one change I'd make to the rest timer, and the metrics I'd run it on."
+---
+
+## The thesis
+
+Hevy is basic and minimalist, and that is why it's my favourite product. I use it five days a week.
+
+My thesis: for a habit product, friction matters more than features. A steep learning curve is what stops people using something consistently. A workout tracker is used with one hand, mid-set, tired. Anything that takes more than a couple of taps doesn't get logged, and a log with gaps is worthless.
+
+## The problem it solves
+
+To progress in the gym I have to beat my last session. That needs exact numbers, not memory.
+
+- Last session's weight and reps sit right next to the set I'm about to do.
+- Logging a set takes a couple of taps.
+- An exercise's numbers follow it across routines, so the history is one history.
+- The library had almost every variation in my routine.
+
+## Why I keep coming back
+
+- **Flexible logging.** I can swap an exercise mid-workout without editing my routine.
+- **The weekly muscle-group view** shows the gaps in my week.
+- **Live PR notifications** mid-workout, and all my PRs collected in the summary afterwards. The motivation comes from my own progress, not from a badge.
+- **A rest timer that stays out of the way.** It isn't on by default. When I turn it on it runs automatically, and I can add time or switch it off, because rest is subjective.
+
+I don't use the social feed at all, which is the part of the app built to bring people back. What brings me back is the logging itself.
+
+## Versus the alternatives
+
+<Bars data="Exercises in my routine | 21; Found in Strong | 15; Missing in Strong | 6" highlight="3" caption="My routine against Strong's exercise library. I stopped logging the six I couldn't find." />
+
+**A notes app** means typing mid-set and scrolling back for last week's numbers.
+
+**Strong** is the closest competitor. I couldn't find 6 of my 21 exercises in it, so I stopped logging them. The lesson I took: mid-workout, nobody creates a custom exercise. Library coverage looks like a content detail and behaves like a retention feature.
+
+## What I'd change: adaptive rest
+
+I rest by feel, but many lifters follow the rest timer, and after heavy sets they add time by hand because fatigue builds up. Every manual adjustment means the timer got it wrong.
+
+So when a set beats your last weight or hits a PR on a compound lift, Hevy would add 30 seconds automatically, with a visible "+30s, heavy set" label and a one-tap undo. To avoid overriding people who want their usual rest, a soft vibration at the original mark says "your usual rest is up", and the normal alert sounds at the extended one.
+
+<Segments data="Usual rest | 120 | 0:00 to 2:00; Heavy-set extension | 30 | to 2:30" highlight="2" caption="A two-minute rest after a heavy set: a soft vibration at 2:00, the normal alert at 2:30." />
+
+- **Success metric:** how often users adjust the timer by hand. It should drop.
+- **Guardrail:** how often people start their next set at the soft vibration instead of waiting. If that rises, the extension is too long and I'd shorten it.
+- **Approach:** a simple rule, not machine learning, so it is predictable and easy to override.
+
+**My backup idea:** group variations under a parent exercise, so the history of an incline press stays linked to the press it varies. There is a paywall tension to manage: the variations themselves would be free, the per-variation graphs would be Pro.
+
+## How I'd measure Hevy
+
+<Tree root="North star | Weekly users who log at least 2 workouts" items="Activation | % of new users who log a second workout within 7 days; Retention | % still logging twice a week at week 4 and week 12; Frequency | Average workouts per active user per week; Logging completeness | % of workouts where every exercise was logged; Seasonal cohort retention | How January sign-ups are doing by March" caption="The north star and the five input metrics I'd use to move it." />
+
+**Why repeat logging.** Hevy's value is beating last session, and that only exists from the second session on. One logged workout delivers almost nothing. This is also why activation is the second workout, not the first.
+
+**Why weekly, not daily.** People train a few times a week, so the metric should match how the product is actually used.
+
+**Why count users, not workouts.** It captures both breadth, how many people, and depth, each of them has a habit.
+
+**Why it predicts the business.** Regular loggers are the ones who stay, bring friends, and would ever pay for Pro.
+
+**Why logging completeness is on the list.** It comes from my Strong experience: a missing exercise means a gap, and gaps come before quitting.
+
+**Why a January cohort.** New Year sign-ups are the classic churn risk for any fitness product, so they deserve their own line.
+
+The "2" is a hypothesis. With Hevy's data I'd look for the logging frequency above which users stick around, and set the threshold there.
+
+**Guardrails:** time taken to log a set, which protects the core flow and the whole thesis; crash rate and app rating.
+
+**Business metrics:** free-to-Pro conversion rate and Pro subscriber retention.
+
+This is my own reading of Hevy as a user. I have no access to Hevy's data.
