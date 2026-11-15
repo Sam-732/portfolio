@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "About",
   description: about.description || site.description,
   alternates: { canonical: "/about" },
-  openGraph: { url: "/about", title: `About ${site.name}` },
+  openGraph: { url: "/about", title: `About ${site.name}`, images: "/opengraph-image" },
 };
 
 export default function AboutPage() {

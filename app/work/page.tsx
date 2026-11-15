@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Three product projects by Samprat Trivedi, each starting from a question the last one left: voice mode adoption, customer feedback at scale, and how far to trust AI insights.",
   alternates: { canonical: "/work" },
-  openGraph: { url: "/work", title: "Work" },
+  openGraph: { url: "/work", title: "Work", images: "/opengraph-image" },
 };
 
 export default function WorkIndex() {

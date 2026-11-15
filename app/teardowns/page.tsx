@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Teardowns",
   description: "Short product teardowns by Samprat Trivedi.",
   alternates: { canonical: "/teardowns" },
-  openGraph: { url: "/teardowns", title: "Teardowns" },
+  openGraph: { url: "/teardowns", title: "Teardowns", images: "/opengraph-image" },
 };
 
 export default function TeardownsIndex() {
